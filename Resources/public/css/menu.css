@@ -1,0 +1,301 @@
+
+
+/*''''''''''''''''''''''''*\
+|   Main navigation menu   |
+\*________________________*/
+
+ul.navigation li {
+    display: inline-block;
+    height: 30px;
+    margin: 0;
+    position: relative;
+    font-size: 9pt;
+}
+
+ul.navigation li.sibling {
+    padding-left: 2px;
+}
+
+ul.navigation li a {
+    height: 10px;
+    padding: 10px 0;
+    margin: 0;
+    display: inline-block;
+    font-weight: bold;
+    color: #DAE0FE;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+ul.navigation.main {
+    width: 100%;
+    list-style:none;
+    text-align: center;
+    font-size: 10pt;
+}
+
+ul.navigation.main li.menu ul {
+    padding-top: 6px;
+    display: none;
+}
+
+ul.navigation.main li {
+    width: 150px;
+    display:inline-block;
+    position:relative;
+    z-index:500;
+}
+
+ul.navigation.main a.main {
+    display: inline-block;
+    padding: 10px 30px;
+    white-space: nowrap;
+}
+
+ul.navigation.main a.menuitem {
+    background-image: url( '/assets/images/mini-arrows-sprite.png' );
+    background-repeat: no-repeat;
+    background-position: right -27px;
+    cursor: default;
+}
+
+ul.navigation.main li.sibling {
+    background-image: url( '/assets/images/separator_li_bright.png' );
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+ul.navigation.main li a {
+    display: block;
+    padding: 8px 5px 0 5px;
+    font-weight: normal;
+    height: 23px;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    line-height: 9px;
+    font-weight: bold;
+}
+
+ul.navigation.main li a.submenuitem:hover {
+    background-image: url( '/assets/images/white-25percent.png' );
+    text-decoration: none;
+    text-shadow: 1px 1px 1px rgba( 0, 0, 0, 0.1 );
+}
+
+ul.navigation.main a.submenuitem {
+    font-weight: normal;
+}
+
+ul.navigation.main a.selected {
+}
+
+ul.navigation.main ul {
+    position:absolute;
+    left:0;
+    display:none;
+    margin: 0 0 0 -1px;
+    padding:0;
+    list-style:none;
+    text-align:left;
+}
+
+ul.navigation.main ul li {
+    display:block;
+    width:auto;
+    background-image: none;
+    text-align:left;
+}
+
+ul.navigation.main ul li a {
+    background: #e3e3e3;
+    color: #444;
+}
+
+ul.navigation.main ul li a:hover {
+    color: #111;
+}
+
+a.submenuitem {
+    width: 145px;
+    /*border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;*/
+    box-shadow: 0px 1px 2px rgba( 0, 0, 0, 0.2 );
+}
+
+a.submenuitem.first {
+    /*border-top: 1px solid #bbb;*/
+    box-shadow: inset 0 1px 0px #fff,
+        0px 1px 2px rgba( 0, 0, 0, 0.2 );
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    -moz-border-top-left-radius: 8px;
+    -moz-border-top-right-radius: 8px;
+}
+
+a.submenuitem.last {
+    /*border-bottom: 1px solid #aaa;*/
+    box-shadow: inset 0 -1px 0px rgba( 0, 0, 0, 0.2 ),
+        0px 1px 2px rgba( 0, 0, 0, 0.2 );
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    -moz-border-bottom-left-radius: 8px;
+    -moz-border-bottom-right-radius: 8px;
+}
+
+a.submenuitem.single {
+    box-shadow: inset 0 1px 0px #fff,
+        inset 0 -1px 0px rgba( 0, 0, 0, 0.2 ),
+        0px 1px 2px rgba( 0, 0, 0, 0.2 );
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+ul.navigation.main ul a {
+    display:block;
+    white-space: nowrap;
+    height:15px;
+    padding: 8px 5px;
+    text-align:left;
+}
+
+ul.navigation.main ul a:hover {
+    background-image: url( '/assets/images/white-10percent.png' );
+}
+
+/* fix small ie6 issue */
+*html ul.navigation.main ul {
+    margin:0 0 0 -2px;
+}
+
+/*'''''''''''''''''''''''''''''''''''''''*\
+|   Secondary navigation where required   |
+\*_______________________________________*/
+
+ul.subnavigation {
+    width: 100%;
+    list-style: none;
+    margin-top: 8px;
+}
+
+ul.subnavigation li {
+    display: inline-block;
+}
+
+ul.subnavigation li a {
+    margin-left: 0;
+    margin-right: 10px;
+    font-size: 10pt;
+}
+
+ul.subnavigation li a.active {
+    cursor: default;
+    color: #000;
+    border-color: #888;
+}
+
+/*'''''''''''''''''''''''''''''''''''''''*\
+|           Submenu navigation            |
+\*_______________________________________*/
+
+ul.submenu {
+    color: #000;
+    padding-top: 12px;
+    height: 12px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+    vertical-align: central;
+}
+
+ul.submenu li {
+    list-style: none;
+    float: left;
+    margin: 2px -1px;
+}
+
+ul.submenu li a.menu-item,
+ul.submenu li input.menu-item {
+    white-space: nowrap;
+    font-size: 9pt;
+    text-decoration: none;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: 4px center;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff) to(#ccc)); /*old webkit*/
+    background: -webkit-linear-gradient(#fff, #ccc); /*new webkit*/
+    background: -moz-linear-gradient(#fff, #ccc); /*gecko*/
+    background: -ms-linear-gradient(#fff, #ccc); /*IE10*/
+    background: -o-linear-gradient(#fff, #ccc); /*opera 11.10+*/
+    background: linear-gradient(#fff, #ccc); /*future CSS3 browsers*/
+    border: 1px solid #bbb;
+    margin-left: 1px;
+    padding: 6px 8px;
+    cursor: pointer;
+    outline: 0;
+    font-family: "CiscoSansRegular", arial, verdana;
+}
+
+ul.submenu li a.menu-item.first {
+    border-radius: 12px 0px 0px 12px;
+    padding-left: 12px;
+}
+
+ul.submenu li a.menu-item.last {
+    border-radius: 0px 12px 12px 0px;
+    padding-right: 12px;
+}
+
+ul.submenu li a.menu-item.unique {
+    border-radius: 12px;
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+ul.submenu li a.menu-item img {
+    border: 0;
+}
+
+ul.submenu li a.menu-item * {
+    vertical-align: text-bottom;
+    opacity: 0.5;
+}
+
+ul.submenu li a.menu-item:focus,
+ul.submenu li a.menu-item:hover,
+ul.submenu li a.menu-item.hover,
+ul.submenu li a.menu-item.active {
+    opacity: 1;
+    color: #fff;
+    background: #005EFF;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#487AAB) to(#2B5593));
+    background: -webkit-linear-gradient(#487AAB, #2B5593);
+    background: -moz-linear-gradient(#487AAB, #2B5593);
+    background: -ms-linear-gradient(#487AAB, #2B5593);
+    background: -o-linear-gradient(#487AAB, #2B5593);
+    background: linear-gradient(#487AAB, #2B5593);
+    color: #fff;
+    border: 1px solid rgb(0, 64, 128);
+}
+
+ul.submenu li a.menu-item:active,
+ul.submenu li a.menu-item.mousedown {
+    color: #999;
+}
+
+ul.submenu li a.menu-item.active {
+    cursor: default;
+    background-color: green;
+}
+
+ul.submenu li a.menu-item.active.toggle {
+    cursor: pointer;
+}
+
+@media ( max-width: 1920px ) {
+    ul.submenu li a.menu-item {
+        font-size: 8pt;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+}

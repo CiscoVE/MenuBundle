@@ -1,0 +1,15 @@
+parameters:
+    cisco.twig.menu_extension.class:  CiscoSystems\MenuBundle\Twig\Extension\MenuExtension
+
+services:
+    cisco.twig.menu_extension:
+        class: %cisco.twig.menu_extension.class%
+        arguments:
+            - '@security.context'
+            - '@security.access.decision_manager'
+            - '@security.access_map'
+            - '@router'
+            - '@twig'
+            - '%cisco.menu.config%'
+        tags:
+            - { name: twig.extension }

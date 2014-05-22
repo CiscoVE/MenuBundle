@@ -1,0 +1,49 @@
+{% block menu %}
+    {% spaceless %}
+    <ul class="navigation main">
+        <li class="{{ root.classes.li }}">
+            <a class="{{ root.classes.li }}" href="{{ path( root.route ) }}">{{ root.label }}</a>
+        </li>
+        {% if root.children | length > 0 %}
+            {% for category in root.children %}
+            <li class="{{ category.classes.li }}">
+                <a class="{{ category.classes.a }}">{{ category.label }}</a>
+                {% if category.children | length > 0 %}
+                <ul style="display: none;">
+                    {% for item in category.children %}
+                        <li>
+                            <a class="{{ item.classes.a }}" href="{{ path( item.route ) }}">{{ item.label }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    {% endspaceless %}
+{% endblock menu %}
+
+{% block sub_menu %}
+    {% spaceless %}
+    <ul class="{{ root.classes.ul }}">
+        {% if root.children | length > 0 %}
+            {% for item in root.children %}
+            <li {% if item.title != null %}title="{{ item.title }}"{% endif %}>
+                <a class="{{ item.classes.a }}
+                    {% if ( item.route and item.route == app.request.attributes.get( '_route' ) ) %}active{% endif %}
+                    {% if root.children | length > 1 %}
+                        {% if loop.first %}first{% elseif loop.last %}last{% endif %}
+                    {% else %}
+                        unique
+                    {% endif %}"
+                   href="{{ path( item.route ) }}">
+                    {% if item.icon != null %}<img src="{{ asset( item.icon ) }}">{% endif %}
+                        {{ item.label }}
+                </a>
+            </li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+    {% endspaceless %}
+{% endblock sub_menu %}
