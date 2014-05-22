@@ -9,6 +9,11 @@
             "name": "Moritz Kraft",
             "email": "mokraft@cisco.com",
             "homepage": "www.cisco.com"
+        },
+        {
+            "name": "Thomas Roche",
+            "email": "throche@cisco.com",
+            "homepage": "www.cisco.com"
         }
     ],
     "require": {
