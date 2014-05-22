@@ -1,0 +1,23 @@
+{
+    "name": "cisco-systems/menu-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony bundle for dynamic menus",
+    "keywords": ["menu", "navigation"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Moritz Kraft",
+            "email": "mokraft@cisco.com",
+            "homepage": "www.cisco.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": ">=2.1"
+    },
+
+    "autoload": {
+        "psr-0": { "CiscoSystems\\MenuBundle": "" }
+    },
+    "target-dir": "CiscoSystems/MenuBundle"
+}
