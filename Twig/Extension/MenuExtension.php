@@ -92,9 +92,10 @@ class MenuExtension extends Twig_Extension
         $rootNode = $this->buildNode( $this->configuration[$key], $token );
         if ( $rootNode )
         {
+            $globals = $this->twig->getGlobals();
             $block = $this->twig
                           ->loadTemplate( 'CiscoSystemsMenuBundle::menu.html.twig' )
-                          ->renderBlock( $type, array( 'root' => $rootNode ));
+                          ->renderBlock( $type, array_merge( $globals, array( 'root' => $rootNode )));
             if ( $block )
             {
                 return $block;
