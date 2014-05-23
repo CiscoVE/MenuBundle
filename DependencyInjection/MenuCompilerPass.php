@@ -31,6 +31,7 @@ class MenuCompilerPass implements CompilerPassInterface
                   . DIRECTORY_SEPARATOR . 'menu.yml';
             if ( !file_exists( $file )) continue;
             $filterConfig = $yaml->parse( file_get_contents( $file ));
+            if ( !is_array( $filterConfig )) continue;
             $config = array_merge( $config, $filterConfig['parameters'][$this->parameter] );
         }
         $container->setParameter( $this->parameter, $config );
