@@ -5,22 +5,12 @@ namespace CiscoSystems\MenuBundle\Twig\Extension;
 use Twig_Extension;
 use Twig_Function_Method;
 use Twig_Environment;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use Symfony\Component\Security\Http\AccessMap;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Router;
+use CiscoSystems\MenuBundle\Authorisation\AuthorisationInterface;
 use CiscoSystems\MenuBundle\Model\Node;
 
 class MenuExtension extends Twig_Extension
 {
-    protected $context;
-    protected $accessDecisionManager;
-    protected $map;
-    protected $router;
-    protected $currentRoute;
+    protected $accessVerifier;
     protected $twig;
     protected $template;
     protected $configuration;
@@ -28,25 +18,16 @@ class MenuExtension extends Twig_Extension
     /**
      * Constructor
      *
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $context
-     * @param \Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface $accessDecisionManager
-     * @param \Symfony\Component\Security\Http\AccessMap $map
-     * @param \Symfony\Component\Routing\Router $router
+     * @param \CiscoSystems\MenuBundle\Authorisation\AuthorisationInterface $accessVerifier
      * @param \Twig_Environment $twig
      * @param array $configuration
      */
     public function __construct(
-        SecurityContextInterface $context,
-        AccessDecisionManagerInterface $accessDecisionManager,
-        AccessMap $map,
-        Router $router,
+        AuthorisationInterface $accessVerifier,
         Twig_Environment $twig,
         $configuration
     ){
-        $this->context = $context;
-        $this->accessDecisionManager = $accessDecisionManager;
-        $this->map = $map;
-        $this->router = $router;
+        $this->accessVerifier = $accessVerifier;
         $this->twig = $twig;
         $this->configuration = $configuration;
     }
@@ -88,10 +69,10 @@ class MenuExtension extends Twig_Extension
             $msg = 'Specified key `' . $key . '` does not exist in menu configuration: ' . join( ', ', $keys );
             throw new \InvalidArgumentException( $msg );
         }
-        $token = $this->attainToken( $this->context );
-        $rootNode = $this->buildNode( $this->configuration[$key], $token );
-        if ( $rootNode )
+        $rootNode = $this->buildNode( $this->configuration[$key] );
+        if ( null !== $rootNode )
         {
+//             ladybug_dump_die( $rootNode );
             $globals = $this->twig->getGlobals();
             $block = $this->twig
                           ->loadTemplate( 'CiscoSystemsMenuBundle::menu.html.twig' )
@@ -108,10 +89,9 @@ class MenuExtension extends Twig_Extension
      * Build markup object tree
      *
      * @param array $config
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return null|\CiscoSystems\MenuBundle\Model\Node
      */
-    protected function buildNode( array $config, TokenInterface $token )
+    protected function buildNode( array $config )
     {
         // Check the config vars exist
         $label =   ( array_key_exists( 'label',   $config )) ? $config['label']   : null;
@@ -122,35 +102,21 @@ class MenuExtension extends Twig_Extension
         // Do some route access checking
         if ( $route )
         {
-            // This may not yet work properly, general idea taken from
-            // https://groups.google.com/forum/#!topic/symfony2/HbyMIPqPdvs
-            $path = $this->router->generate( $route );
-            $baseUrl = $this->router->getContext()->getBaseUrl();
-            $path = substr( $path, strlen( $baseUrl ));
-            $request = Request::create( $path );
-            list( $attributes, $channel ) = $this->map->getPatterns( $request );
-            if ( is_array( $attributes )) // this is a bit fishy, what about anonymous users?
-            {
-                $access = $this->accessDecisionManager->decide( $token, $attributes, $request );
-                if ( !$access ) return null;
-            }
+            if ( !$this->accessVerifier->canAccessRoute( $route )) return null;
         }
         // Do the object building
-        $children = array();
+        $node = new Node( $label, $route, $classes, $icon, $title );
+//         $children = array();
         if( array_key_exists( 'items', $config ))
         {
             foreach( $config['items'] as $key => $item )
             {
-                $children[$key] = $this->buildNode( $item, $token );
+                $node->addChild( $this->buildNode( $item ), $key );
+//                 $childNode = $this->buildNode( $item );
+//                 $children[$key] = $childNode;
             }
         }
-        return new Node( $label, $route, $classes, $children, $icon, $title );
-    }
-
-    protected function attainToken( SecurityContextInterface $context )
-    {
-        $token = $this->context->getToken();
-        if ( null !== $token ) return $token;
-        return new AnonymousToken( "anonymous", "anony-mouse" );
+//         return new Node( $label, $route, $classes, $children, $icon, $title );
+        return $node;
     }
 }
