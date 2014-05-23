@@ -1,10 +1,10 @@
 parameters:
-    cisco.menu.access_verifier.class:  CiscoSystems\MenuBundle\Authorisation\DefaultAccessVerifier
+    cisco.menu.default_access_verifier.class:  CiscoSystems\MenuBundle\Authorisation\DefaultAccessVerifier
     cisco.twig.menu_extension.class:  CiscoSystems\MenuBundle\Twig\Extension\MenuExtension
 
 services:
-    cisco.menu.access_verifier:
-        class: '%cisco.menu.access_verifier.class%'
+    cisco.menu.default_access_verifier:
+        class: '%cisco.menu.default_access_verifier.class%'
         arguments:
             - '@security.context'
             - '@security.access.decision_manager'
@@ -13,7 +13,8 @@ services:
     cisco.twig.menu_extension:
         class: '%cisco.twig.menu_extension.class%'
         arguments:
-            - '@cisco.menu.access_verifier'
+        # http://richardmiller.co.uk/2012/02/22/symfony2-manipulating-service-parameters-and-definitions/
+            - '@cisco.menu.default_access_verifier'
             - '@twig'
             - '%cisco.menu.config%'
         tags:

@@ -72,7 +72,6 @@ class MenuExtension extends Twig_Extension
         $rootNode = $this->buildNode( $this->configuration[$key] );
         if ( null !== $rootNode )
         {
-//             ladybug_dump_die( $rootNode );
             $globals = $this->twig->getGlobals();
             $block = $this->twig
                           ->loadTemplate( 'CiscoSystemsMenuBundle::menu.html.twig' )
@@ -106,17 +105,13 @@ class MenuExtension extends Twig_Extension
         }
         // Do the object building
         $node = new Node( $label, $route, $classes, $icon, $title );
-//         $children = array();
         if( array_key_exists( 'items', $config ))
         {
             foreach( $config['items'] as $key => $item )
             {
                 $node->addChild( $this->buildNode( $item ), $key );
-//                 $childNode = $this->buildNode( $item );
-//                 $children[$key] = $childNode;
             }
         }
-//         return new Node( $label, $route, $classes, $children, $icon, $title );
         return $node;
     }
 }

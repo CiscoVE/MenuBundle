@@ -39,5 +39,8 @@ class MenuCompilerPass implements CompilerPassInterface
 //         print_r( $config );
 //         echo '</pre>';
 //         die(); exit;
+        // TODO:
+        // Check if we want to override the access verifier with an app level service
+        // If so, replace first injected parameter of this bundle's Twig extension with it
     }
 }
