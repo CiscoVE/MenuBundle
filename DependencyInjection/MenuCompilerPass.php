@@ -25,7 +25,7 @@ class MenuCompilerPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds( 'cisco.menu.access_verifier' );
         foreach ( $taggedServices as $serviceId => $attributes )
         {
-            if ( array_key_exists( 'alias', $attributes[0] ))
+            if ( count( $attributes ) > 0 && array_key_exists( 'alias', $attributes[0] ))
             {
                 if ( 'default_menu_access_verifier' == $attributes[0]['alias'] ) continue;
             }
