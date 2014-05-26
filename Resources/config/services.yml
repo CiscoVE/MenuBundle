@@ -10,6 +10,8 @@ services:
             - '@security.access.decision_manager'
             - '@security.access_map'
             - '@router'
+        tags:
+          - { name: cisco.menu.access_verifier, alias: default_menu_access_verifier }
     cisco.twig.menu_extension:
         class: '%cisco.twig.menu_extension.class%'
         arguments:

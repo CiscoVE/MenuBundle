@@ -4,6 +4,7 @@ namespace CiscoSystems\MenuBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Yaml\Parser;
 
 class MenuCompilerPass implements CompilerPassInterface
@@ -19,7 +20,20 @@ class MenuCompilerPass implements CompilerPassInterface
 
     public function process( ContainerBuilder $container )
     {
-        // Menu configurations from registered bundles
+        $definition = $container->getDefinition( 'cisco.twig.menu_extension' );
+        // Check if app wants to override access verification service
+        $taggedServices = $container->findTaggedServiceIds( 'cisco.menu.access_verifier' );
+        foreach ( $taggedServices as $serviceId => $attributes )
+        {
+            if ( array_key_exists( 'alias', $attributes ))
+            {
+                if ( 'default_menu_access_verifier' == $attributes['alias'] ) continue;
+            }
+            // grab the first non-default access verifier defined and replace the default one with it:
+            $definition->replaceArgument( 0, new Reference( $serviceId ));
+            break;
+        }
+        // Get menu configurations from registered bundles
         $config = array();
         $yaml = new Parser();
         $bundles = $this->kernel->getBundles();
@@ -35,12 +49,6 @@ class MenuCompilerPass implements CompilerPassInterface
             $config = array_merge( $config, $filterConfig['parameters'][$this->parameter] );
         }
         $container->setParameter( $this->parameter, $config );
-//         echo '<pre>';
-//         print_r( $config );
-//         echo '</pre>';
-//         die(); exit;
-        // TODO:
-        // Check if we want to override the access verifier with an app level service
-        // If so, replace first injected parameter of this bundle's Twig extension with it
+//         ladybug_dump_die( $config );
     }
 }
