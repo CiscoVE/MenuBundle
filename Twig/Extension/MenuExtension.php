@@ -3,7 +3,7 @@
 namespace CiscoSystems\MenuBundle\Twig\Extension;
 
 use Twig_Extension;
-use Twig_Function_Method;
+use Twig_SimpleFunction;
 use Twig_Environment;
 use CiscoSystems\MenuBundle\Authorisation\AuthorisationInterface;
 use CiscoSystems\MenuBundle\Model\Node;
@@ -40,7 +40,7 @@ class MenuExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            'render_menu' => new Twig_Function_Method( $this, 'renderMenu', array( 'is_safe' => array( 'html' ), )),
+            new Twig_Function_Method( 'render_menu' , array( $this, 'renderMenu', array( 'is_safe' => array( 'html' ) ))
         );
     }
 
