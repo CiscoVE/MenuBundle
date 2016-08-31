@@ -2,18 +2,18 @@
 
 namespace CiscoSystems\MenuBundle\Authorisation;
 
-use CiscoSystems\MenuBundle\Authorisation\AuthorisationInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Http\AccessMap;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
+use CiscoSystems\MenuBundle\Authorisation\AuthorisationInterface;
 
 class DefaultAccessVerifier implements AuthorisationInterface
 {
-    protected $context;
+    protected $tokenStorage;
     protected $accessDecisionManager;
     protected $map;
     protected $router;
@@ -27,12 +27,12 @@ class DefaultAccessVerifier implements AuthorisationInterface
      * @param \Symfony\Component\Routing\Router $router
      */
     public function __construct(
-        SecurityContextInterface $context,
+        TokenStorageInterface $tokenStorage,
         AccessDecisionManagerInterface $accessDecisionManager,
         AccessMap $map,
         Router $router
     ){
-        $this->context = $context;
+        $this->tokenStorage = $tokenStorage;
         $this->accessDecisionManager = $accessDecisionManager;
         $this->map = $map;
         $this->router = $router;
@@ -43,7 +43,7 @@ class DefaultAccessVerifier implements AuthorisationInterface
      */
     public function canAccessRoute( $routeName )
     {
-        if ( null === $token = $this->context->getToken() ) return true;
+        if ( null === $token = $this->tokenStorage->getToken() ) return true;
         $path = $this->router->generate( $routeName );
         $baseUrl = $this->router->getContext()->getBaseUrl();
         $path = substr( $path, strlen( $baseUrl ));

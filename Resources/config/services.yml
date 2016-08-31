@@ -6,7 +6,7 @@ services:
     cisco.menu.default_access_verifier:
         class: '%cisco.menu.default_access_verifier.class%'
         arguments:
-            - '@security.context'
+            - '@security.token_storage'
             - '@security.access.decision_manager'
             - '@security.access_map'
             - '@router'
