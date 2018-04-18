@@ -62,6 +62,7 @@ class MenuExtension extends Twig_Extension
      */
     public function renderMenu( $key = "", $type = "" )
     {
+        
         if ( !array_key_exists( $key, $this->configuration ))
         {
             $keys = array();
@@ -73,6 +74,7 @@ class MenuExtension extends Twig_Extension
         if ( null !== $rootNode )
         {
             $globals = $this->twig->getGlobals();
+            
             $block = $this->twig
                           ->loadTemplate( 'CiscoSystemsMenuBundle::menu.html.twig' )
                           ->renderBlock( $type, array_merge( $globals, array( 'root' => $rootNode )));

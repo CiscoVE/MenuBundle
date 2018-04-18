@@ -1,19 +1,19 @@
 {% block menu %}
     {% spaceless %}
-    <ul class="navigation main"> {# may want to make this class attribute configurable as well, see block below #}
+    
+    <ul class="nav nav-tabs"> {# may want to make this class attribute configurable as well, see block below #}
         <li class="{{ root.classes.li }}">
-            <a class="{{ root.classes.li }}" href="{{ path( root.route ) }}">{{ root.label }}</a>
+            <a class="{{ root.classes.li }}" href="{{ path( root.route ) }}"><div class="tab__heading">{{ root.label }}</div></a>
         </li>
         {% if root.children | length > 0 %}
             {% for category in root.children %}
-                <li class="{{ category.classes.li }}">
-                    <a class="{{ category.classes.a }}">{{ category.label }}</a>
+                <li class="{{ category.classes.li }}">                 
+                    <a ><div class="tab__heading" >{{ category.label }}</div></a>                 
                     {% if category.children | length > 0 %}
-                    <ul style="display: none;">
+                    <ul class="dropdown__fix" style="display:none;" >
                         {% for item in category.children %}
-                            <li>
-                                <a class="{{ item.classes.a }}" href="{{ path( item.route ) }}">{{ item.label }}</a>
-                            </li>
+                            <li><a class="{{ item.classes.a }}" href="{{ path( item.route ) }}">{{ item.label }}</a></li>
+                   
                         {% endfor %}
                     </ul>
                     {% endif %}
@@ -26,24 +26,27 @@
 
 {% block sub_menu %}
     {% spaceless %}
+    <div class="secondary-tabs">
     <ul class="{{ root.classes.ul }}">
         {% if root.children | length > 0 %}
             {% for item in root.children %}
-                <li {% if item.title != null %}title="{{ item.title }}"{% endif %}>
-                    <a class="{{ item.classes.a }}
+                <li class="tab" {% if item.title != null %}title="{{ item.title }}"{% endif %}>
+                    <a 
                         {% if ( item.route and item.route == app.request.attributes.get( '_route' ) ) %}active{% endif %}
                         {% if root.children | length > 1 %}
                             {% if loop.first %}first{% elseif loop.last %}last{% endif %}
                         {% else %}
                             unique
                         {% endif %}"
-                       href="{{ path( item.route ) }}">
-                        {% if item.icon != null %}<img src="{{ asset( item.icon ) }}">{% endif %}
+                       href="{{ path( item.route ) }}"><div class="{{ item.classes.a }}">
+                        {% if item.icon != null %}<span class="{{item.icon}} pad-right-5"></span>{% endif %}
                             {{ item.label }}
+                       </div>
                     </a>
                 </li>
             {% endfor %}
         {% endif %}
     </ul>
+    </div>
     {% endspaceless %}
 {% endblock sub_menu %}

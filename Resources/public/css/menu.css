@@ -37,7 +37,13 @@ ul.navigation.main {
 
 ul.navigation.main li.menu ul {
     padding-top: 6px;
-    display: none;
+
+}
+
+ul.nav.nav-tabs li {
+    display:inline-block;
+    position:relative;
+    z-index:500;	
 }
 
 ul.navigation.main li {
@@ -91,10 +97,20 @@ ul.navigation.main a.submenuitem {
 ul.navigation.main a.selected {
 }
 
+ul.nav.nav-tabs ul {
+	position:absolute;
+    left:0;
+
+    margin: 0 0 0 -1px;
+    padding:0;
+    list-style:none;
+    text-align:left;
+}
+
 ul.navigation.main ul {
     position:absolute;
     left:0;
-    display:none;
+
     margin: 0 0 0 -1px;
     padding:0;
     list-style:none;

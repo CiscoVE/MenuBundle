@@ -5,7 +5,7 @@ $(function()
         $( this ).children( 'li:first-child' ).children( 'a' ).addClass( 'first' );
         $( this ).children( 'li:last-child' ).children( 'a' ).addClass( 'last' );
     });
-    $( '.navigation.main li.menu' ).hover(
+    $( '.nav-tabs li.tab' ).hover(
         function()
         {
             $( 'ul', this ).fadeIn( 200 );
