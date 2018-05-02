@@ -12,8 +12,13 @@
                     {% if category.children | length > 0 %}
                     <ul class="dropdown__fix" style="display:none;" >
                         {% for item in category.children %}
-                            <li><a class="{{ item.classes.a }}" href="{{ path( item.route ) }}">{{ item.label }}</a></li>
-                   
+                            <li><div class="li-content" data-url="{{ path( item.route ) }}" data-label="{{ item.label }}">
+                            		<a class="{{ item.classes.a }}" href="{{ path( item.route ) }}">
+                                    {% if item.icon != null %}<span class="{{item.icon}} pad-right-5"></span>{% endif %}
+                                    {{ item.label }}
+                                  </a>
+                                  </div>
+                            </li>
                         {% endfor %}
                     </ul>
                     {% endif %}
