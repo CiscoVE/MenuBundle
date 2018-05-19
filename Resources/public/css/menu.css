@@ -181,7 +181,7 @@ ul.navigation.main ul a:hover {
 }
 
 /* fix small ie6 issue */
-*html ul.navigation.main ul {
+html ul.navigation.main ul {
     margin:0 0 0 -2px;
 }
 
