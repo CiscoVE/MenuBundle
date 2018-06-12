@@ -3,9 +3,7 @@
 namespace CiscoSystems\MenuBundle\Authorisation;
 
 use CiscoSystems\MenuBundle\Authorisation\AuthorisationInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Http\AccessMap;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +25,7 @@ class DefaultAccessVerifier implements AuthorisationInterface
      * @param \Symfony\Component\Routing\Router $router
      */
     public function __construct(
-        SecurityContextInterface $context,
+        TokenStorage $context,
         AccessDecisionManagerInterface $accessDecisionManager,
         AccessMap $map,
         Router $router
