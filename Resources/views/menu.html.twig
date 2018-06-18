@@ -7,9 +7,9 @@
         </li>
         {% if root.children | length > 0 %}
             {% for category in root.children %}
+                {% if category.children | length > 0 %}
                 <li class="{{ category.classes.li }}">                 
-                    <a ><div class="tab__heading" >{{ category.label }}</div></a>                 
-                    {% if category.children | length > 0 %}
+                    <a ><div class="tab__heading" >{{ category.label }}</div></a>               
                     <ul class="dropdown__fix" style="display:none;" >
                         {% for item in category.children %}
                             <li><div class="li-content" data-url="{{ path( item.route ) }}" data-label="{{ item.label }}">
@@ -21,8 +21,8 @@
                             </li>
                         {% endfor %}
                     </ul>
-                    {% endif %}
                 </li>
+                {% endif %}
             {% endfor %}
         {% endif %}
     </ul>
